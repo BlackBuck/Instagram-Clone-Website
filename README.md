@@ -22,6 +22,9 @@ Now for the node modules open terminal/command prompt and type in the following 
 
 You would also have to set up your database in mysql and then in the server.js file change the following![● server js - Website - Visual Studio Code 8_19_2021 10_26_47 AM](https://user-images.githubusercontent.com/67675436/130010680-48fc1be3-4a15-4a4f-b49c-385798100eac.png)
 
+[USERNAME] = The username which you used to login to mysql (shouldn't be the root due to privilege restrictions).
+[PASS] = The password for that username
+[DATABASE] = The database you created for this project.
 
 Done.
 Happy Coding :)
