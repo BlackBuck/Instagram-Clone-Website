@@ -20,5 +20,8 @@ Now for the node modules open terminal/command prompt and type in the following 
 1. cd [DIRECTORY WHERE YOU SAVED THIS PROJECT]
 2. npm install express multer mysql passport url bcrypt express-flash express-session path dotenv --save
 
+You would also have to set up your database in mysql and then in the server.js file change the following![● server js - Website - Visual Studio Code 8_19_2021 10_26_47 AM](https://user-images.githubusercontent.com/67675436/130010680-48fc1be3-4a15-4a4f-b49c-385798100eac.png)
+
+
 Done.
 Happy Coding :)
