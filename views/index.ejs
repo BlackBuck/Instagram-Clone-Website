@@ -1,1 +1,157 @@
+<html>
 
+<head>
+    <title>Clover</title>
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="./css/all.min.css">
+</head>
+
+<body>
+    <nav class="menu">
+        <div class="menu-item">
+            <div class="menu-text">
+                <a href="/">Home</a>
+            </div>
+        </div>
+        <div class="menu-item">
+            <div class="menu-text">
+                <a href="/messages">Messages</a>
+            </div>
+        </div>
+        <div class="menu-item">
+            <div class="menu-text">
+                <a href="/account">Account</a>
+            </div>
+        </div>
+        <div class="menu-item" id="search-box">
+            <div class="menu-text">
+                <input type="text" placeholder="Search" id="search" onkeyuponpaste oninput="Search()"></input>
+            </div>
+            <div class="sub-menu" id="search-sub-menu">
+                <div class="sub-menu-holder"></div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-container" style="background: transparent">
+        <section class="content-container">
+            <div class="content">
+                <div class="posts" id="posts">
+                    <article class="post">
+                        <div class="post__header">
+                            <div class="post__profile">
+                                <a href="https://github.com/leocosta1" target="_blank" class="post__avatar">
+                                    <img src="./images/profile.png" alt="User Picture">
+                                </a>
+                                <a href="https://github.com/leocosta1" target="_blank" class="post__user">leocosta1</a>
+                            </div>
+                        </div>
+
+                        <div class="post__content">
+                            <div class="post__medias">
+                                <img class="post__media" src="./naruto.jpg" alt="Post Content">
+                            </div>
+                        </div>
+
+                        <div class="post__footer">
+                            <div class="post__buttons">
+                                <button class="post__button">
+                                   <i class="fas fa-heart"></i>
+                                </button>
+                                <button class="post__button">
+                                    <span>
+                                        <i class="fas fa-comments"></i>
+                                    </span>
+                                </button>
+
+                                <div class="post__indicators"></div>
+
+                                <button class="post__button post__button--align-right">
+                                    
+                                </button>
+                            </div>
+
+                            <div class="post__infos">
+                                <div class="post__likes">
+                                    <a href="#" class="post__likes-avatar">
+                                        <img src="./images/profile.png" alt="User Picture">
+                                    </a>
+                                    <span>Liked by <a class="post__name--underline" href="#">user123</a> and <a href="#">73 others</a></span>
+                                </div>
+                                <input class="post__likes" type="text" placeholder="Add a comment" style="background: url('./images/clip-icon.png') no-repeat center right;align-content: end;align-items: end;">
+                                </input>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const uname = <%-uname%>
+        const following = <%-following%>
+
+        function Search() {
+            data = document.getElementById("search").value;
+            let searchquery = "/search?user=" + data;
+            fetch(searchquery).then((response) => {
+                if (response)
+                    return response.json();
+            }).then((data) => {
+                console.log(data.users);
+                //clear the search results first
+
+                while (document.getElementById("search-sub-menu").firstChild) {
+                    document.getElementById("search-sub-menu").removeChild(document.getElementById("search-sub-menu").firstChild);
+                }
+                let submenuholder = document.createElement("div");
+                submenuholder.className = "sub-menu-holder";
+                document.getElementById("search-sub-menu").appendChild(submenuholder)
+
+
+                //making the search results
+                for (let i = 0; i < data.users.length; i++) {
+                    const element = data.users[i];
+                    const submenu = document.createElement('div');
+                    submenu.className = "sub-menu";
+                    const iconbox = document.createElement('div');
+                    iconbox.className = "icon-box";
+                    const icon = document.createElement('div');
+                    icon.className = "icon";
+                    const profilepic = document.createElement('img');
+                    profilepic.src = "./images/profile.png";
+                    const text = document.createElement('div');
+                    text.className = "text";
+                    const title = document.createElement('div');
+                    title.className = "title";
+                    const profilelink = document.createElement('a');
+                    profilelink.href = '/accounts/' + element.uname;
+                    profilelink.className = "title";
+                    profilelink.innerHTML = '@' + element.uname;
+                    const subtext = document.createElement('subtext');
+                    subtext.className = "sub-text";
+                    subtext.innerHTML = element.name;
+
+                    //adding the elements to the search id
+
+                    title.appendChild(profilelink);
+                    text.appendChild(title);
+                    text.appendChild(subtext);
+                    icon.appendChild(profilepic);
+                    iconbox.appendChild(icon);
+                    iconbox.appendChild(text);
+                    submenu.appendChild(iconbox);
+                    submenu.appendChild(submenuholder);
+                    document.getElementById("search-sub-menu").appendChild(iconbox);
+                }
+
+            });
+        }
+    </script>
+
+</body>
+
+</html>
