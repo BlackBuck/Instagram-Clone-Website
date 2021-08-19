@@ -1,0 +1,36 @@
+<html>
+
+<head>
+    <title>Register to Clover</title>
+    <link rel="stylesheet" href="./styles.css">
+</head>
+
+<body>
+
+    <form action="/register" method="POST">
+        <div id="form-title">
+            <label for="form-title">Register a new user</label><br>
+        </div><br>
+        <div>
+            <label for="Name">First Name</label><br>
+            <input type="text" id="name" name="name" placeholder="Name"></input><br>
+        </div>
+        <div>
+            <label for="user-id">User-id</label><br>
+            <input type="text" id="uname" name="uname" placeholder="uid"></input><br>
+        </div>
+        <div>
+            <label for="email">Email</label><br>
+            <input type="email" id="email" name="email" placeholder="mail@domain.com"></input><br>
+        </div>
+        <div>
+            <label for="Password">Password</label><br>
+            <input type="text" id="password" name="password" placeholder="Make me strong"></input><br>
+        </div><br>
+        <button type="submit" id="link">Register</button><br>
+        <a href="/login">Login</a><br>
+    </form>
+
+</body>
+
+</html>

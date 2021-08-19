@@ -1,0 +1,36 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/all.min.css">
+    <link rel="stylesheet" href="./css/owl.carousel.min.css">
+    <link rel="stylesheet" href="./css/owl.theme.default.min.css">
+
+    <!--MAIN CSS-->
+    <link rel="stylesheet" href="./css/tooplate-ben-resume-style.css">
+    <title>Login to Clover</title>
+</head>
+
+<body>
+
+
+    <% if(messages.error){ %>
+        <%= messages.error %>
+            <% } %>
+                <form action="/login" method="POST" id="login-form">
+                    <label for="login-title" class="font-large title">Login to existing account</label><br><br>
+                    <div>
+                        <label for="user-id">User-id</label><br>
+                        <input type="text" id="uname" name="uname" placeholder="User ID"></input><br>
+                    </div>
+                    <div>
+                        <label for="password">Password</label><br>
+                        <input type="text" id="password" name="password" placeholder="Pass"></input><br>
+                    </div><br>
+                    <input type="Submit" id="submit-btn" name="Login"></input><br>
+                    <a href="/register" id="link">Don't have an account?</a><br>
+                </form>
+
+</body>
+
+</html>

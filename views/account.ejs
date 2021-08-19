@@ -1,0 +1,224 @@
+<html>
+
+<head>
+    <title>Account</title>
+
+
+    <!--MAIN CSS-->
+    <link rel="stylesheet" href="/css/all.min.css">
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/admin.css">
+</head>
+
+<body data-spy="scroll" data-target="#navbarNav" data-offset="50" style="background: linear-gradient(to right, #14a9ce 0%, #d2379b 100%)">
+
+    <!-- MENU BAR -->
+    <nav class="menu">
+        <div class="menu-item">
+            <div class="menu-text">
+                <a href="/">Home</a>
+            </div>
+        </div>
+        <div class="menu-item">
+            <div class="menu-text">
+                <a href="/messages">Messages</a>
+            </div>
+        </div>
+        <div class="menu-item">
+            <div class="menu-text">
+                <a href="/account">Account</a>
+            </div>
+        </div>
+        <div class="menu-item" id="search-box">
+            <div class="menu-text">
+                <input type="text" placeholder="Search" id="search" onkeyuponpaste oninput="Search()"></input>
+            </div>
+            <div class="sub-menu" id="search-sub-menu">
+                <div class="sub-menu-holder"></div>
+            </div>
+        </div>
+    </nav>
+
+
+    <!-- Account -->
+    <header id="header">
+
+        <div class="container">
+
+            <div class="profile">
+
+                <div class="profile-image">
+
+                    <img src="./images/naruto.jpg" alt="" style="border-radius: 50%;padding: 5px;width: 150px;">
+
+                </div>
+
+                <div class="profile-user-settings">
+
+                    <h1 class="profile-user-name">
+                        <%= uname %>
+                    </h1>
+
+                    <button class="btn profile-edit-btn">Edit Profile</button>
+
+                    <button class="btn profile-settings-btn" aria-label="profile settings"><i class="fas fa-cog" aria-hidden="true"></i></button>
+
+                </div>
+
+                <div class="profile-stats">
+
+                    <ul>
+                        <li><span class="profile-stat-count">456</span> posts</li>
+                        <li><span class="profile-stat-count">188</span> followers</li>
+                        <li><span class="profile-stat-count">206</span> following</li>
+                    </ul>
+
+                </div>
+
+                <div class="profile-bio">
+
+                    <p><span class="profile-real-name"><%= name %></span><br>
+                    </p>
+
+                </div>
+
+            </div>
+            <!-- End of profile section -->
+
+        </div>
+        <!-- End of container -->
+
+    </header>
+
+    <main id="main">
+
+        <div class="container">
+
+            <div class="gallery" id="gallery">
+
+            </div>
+            <!-- End of gallery -->
+
+            <form id="post-form" class="post" enctype="multipart/form-data" action="/upload" method="post" role="presentation">
+                <input id="file" name="image" type="file" accept="image/jpeg,image/gif,image/png" onchange="upload();">
+                </input>
+            </form>
+
+        </div>
+        <!-- End of container -->
+
+    </main>
+
+
+    <!-- SCRIPTS -->
+    <script>
+        const posts = <%-posts%>
+        for (let i = 0; i <
+            posts.length; i++) {
+            const gallery = document.getElementById("gallery");
+            const galleryitem = document.createElement("div");
+            galleryitem.className = "gallery-item";
+            galleryitem.tabindex = i;
+            const galleryimage = document.createElement("img");
+            galleryimage.className = "gallery-image";
+            galleryimage.src = posts[i].url;
+            const info = document.createElement("div");
+            info.className = "gallery-item-info";
+            const ul = document.createElement("ul");
+            const licomments = document.createElement("li");
+            licomments.className = "gallery-item-comments";
+            const commentsspan = document.createElement("span");
+            commentsspan.className = "visually-hidden";
+            commentsspan.innerHTML = "Comments";
+            const commentsfas = document.createElement("i")
+            commentsfas.className = "fas fa-comment";
+            commentsfas.ariaHidden = "true";
+            commentsfas.innerHTML = posts[i].comments;
+            const lilikes = document.createElement("li");
+            lilikes.className = "gallery-item-likes";
+            const likesspan = document.createElement("span");
+            likesspan.className = "visually-hidden";
+            likesspan.innerHTML = "Likes";
+            const likesfas = document.createElement("i");
+            likesfas.className = "fas fa-heart";
+            likesfas.ariaHidden = "true";
+            likesfas.innerHTML = posts[i].likes;
+            lilikes.appendChild(likesspan);
+            lilikes.appendChild(likesfas);
+            licomments.appendChild(commentsspan);
+            licomments.appendChild(commentsfas);
+
+            ul.appendChild(lilikes);
+            ul.appendChild(licomments);
+            info.appendChild(ul);
+            galleryitem.appendChild(info);
+            galleryitem.appendChild(galleryimage);
+            document.getElementById("gallery").appendChild(galleryitem);
+        }
+
+        function Search() {
+            data = document.getElementById("search").value;
+            let searchquery = "/search?user=" + data;
+            fetch(searchquery).then((response) => {
+                if (response)
+                    return response.json();
+            }).then((data) => {
+                console.log(data.users);
+                //clear the search results first
+
+                while (document.getElementById("search-sub-menu").firstChild) {
+                    document.getElementById("search-sub-menu").removeChild(document.getElementById("search-sub-menu").firstChild);
+                }
+                let submenuholder = document.createElement("div");
+                submenuholder.className = "sub-menu-holder";
+                document.getElementById("search-sub-menu").appendChild(submenuholder)
+
+
+                //making the search results
+                for (let i = 0; i < data.users.length; i++) {
+                    const element = data.users[i];
+                    const submenu = document.createElement('div');
+                    submenu.className = "sub-menu";
+                    const iconbox = document.createElement('div');
+                    iconbox.className = "icon-box";
+                    const icon = document.createElement('div');
+                    icon.className = "icon";
+                    const profilepic = document.createElement('img');
+                    profilepic.src = "./images/profile.png";
+                    const text = document.createElement('div');
+                    text.className = "text";
+                    const title = document.createElement('div');
+                    title.className = "title";
+                    const profilelink = document.createElement('a');
+                    profilelink.href = '/accounts/' + element.uname;
+                    profilelink.className = "title";
+                    profilelink.innerHTML = '@' + element.uname;
+                    const subtext = document.createElement('subtext');
+                    subtext.className = "sub-text";
+                    subtext.innerHTML = element.name;
+
+                    //adding the elements to the search id
+
+                    title.appendChild(profilelink);
+                    text.appendChild(title);
+                    text.appendChild(subtext);
+                    icon.appendChild(profilepic);
+                    iconbox.appendChild(icon);
+                    iconbox.appendChild(text);
+                    submenu.appendChild(iconbox);
+                    submenu.appendChild(submenuholder);
+                    document.getElementById("search-sub-menu").appendChild(iconbox);
+                }
+
+            });
+        }
+
+        function upload() {
+            const data = document.getElementById("file");
+            console.log(data)
+            document.getElementById("post-form").submit();
+        }
+    </script>
+</body>
+
+</html>
